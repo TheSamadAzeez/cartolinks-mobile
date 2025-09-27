@@ -3,14 +3,18 @@ import { Stack } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { ScreenContent } from '~/components/ScreenContent';
+import CreatePosterScreen from '../CreatePosterScreen';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Home() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Tab One' }} />
-      <View style={styles.container}>
+      <Stack.Screen />
+      <StatusBar style="light" />
+      <CreatePosterScreen />
+      {/* <View style={styles.container}>
         <ScreenContent path="app/(tabs)/index.tsx" title="Tab One" />
-      </View>
+      </View> */}
     </>
   );
 }

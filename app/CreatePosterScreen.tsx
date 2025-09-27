@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const posterTypes = [
-  { label: 'display', title: 'New Limited Edition', color: '#C7A16E' },
+  { label: 'Display', title: 'New Limited Edition', color: '#C7A16E' },
   { label: 'Promotion', title: 'Up to 50% Off', color: '#D9D9D9' },
   { label: 'Branding', title: "Editor's Choice", color: '#A7B3C7' },
   { label: 'Announcement', title: 'Join Us At Our Studio', color: '#B3E3F7' },
@@ -33,12 +34,23 @@ export default function CreatePosterScreen() {
       {/* Tabs */}
       <View style={styles.tabs}>
         {['Smart script', 'Advanced script'].map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[styles.tab, selectedTab === tab && styles.tabActive]}
-            onPress={() => setSelectedTab(tab)}>
-            <Text style={[styles.tabText, selectedTab === tab && styles.tabTextActive]}>{tab}</Text>
-          </TouchableOpacity>
+          <View key={tab} style={styles.tabWrapper}>
+            <TouchableOpacity
+              style={[styles.tab, selectedTab === tab && styles.tabActive]}
+              onPress={() => setSelectedTab(tab)}>
+              <Text style={[styles.tabText, selectedTab === tab && styles.tabTextActive]}>
+                {tab}
+              </Text>
+            </TouchableOpacity>
+            {selectedTab === tab && (
+              <LinearGradient
+                colors={['#00D4FF', '#5A67D8']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.tabGradient}
+              />
+            )}
+          </View>
         ))}
       </View>
 
@@ -63,7 +75,9 @@ export default function CreatePosterScreen() {
               ]}
               onPress={() => setSelectedType(idx)}>
               <Text style={styles.posterTypeTitle}>{type.title}</Text>
-              <Text style={styles.posterTypeLabel}>{type.label}</Text>
+              <View style={{ backgroundColor: type.color }}>
+                <Text style={styles.posterTypeLabel}>{type.label}</Text>
+              </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -134,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111',
     paddingHorizontal: 16,
+    gap: 16,
   },
   contentArea: {
     flex: 1,
@@ -163,25 +178,40 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     marginBottom: 16,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    gap: 40,
+  },
+  tabWrapper: {
+    position: 'relative',
+    alignItems: 'center',
   },
   tab: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
-    marginRight: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tabActive: {
-    borderBottomColor: '#fff',
+    borderBottomColor: 'transparent',
+  },
+  tabGradient: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2,
   },
   tabText: {
     color: '#aaa',
     fontSize: 16,
+    textAlign: 'center',
   },
   tabTextActive: {
     color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   question: {
     color: '#fff',
@@ -198,16 +228,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   posterTypeCard: {
-    width: 100,
-    height: 120,
-    borderRadius: 16,
-    marginRight: 12,
-    padding: 12,
+    width: 80,
+    height: 100,
+    borderRadius: 10,
+    marginRight: 6,
+    padding: 0,
     justifyContent: 'flex-end',
     shadowColor: '#000',
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
+    overflow: 'hidden',
   },
   posterTypeCardActive: {
     borderWidth: 2,
@@ -220,8 +251,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   posterTypeLabel: {
-    color: '#444',
+    color: '#fff',
     fontSize: 14,
+    textAlign: 'center',
+    paddingVertical: 3,
   },
   inputContainer: {
     backgroundColor: '#222',

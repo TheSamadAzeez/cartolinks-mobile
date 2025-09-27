@@ -1,10 +1,7 @@
 import { Stack } from 'expo-router';
 
-import { StyleSheet, View } from 'react-native';
-
-import { ScreenContent } from '~/components/ScreenContent';
-import CreatePosterScreen from '../CreatePosterScreen';
 import { StatusBar } from 'expo-status-bar';
+import CreatePosterScreen from '../CreatePosterScreen';
 
 export default function Home() {
   return (
@@ -18,10 +15,3 @@ export default function Home() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-  },
-});

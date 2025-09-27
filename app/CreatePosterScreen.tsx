@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const posterTypes = [
   { label: 'display', title: 'New Limited Edition', color: '#C7A16E' },
@@ -49,75 +42,105 @@ export default function CreatePosterScreen() {
         ))}
       </View>
 
-      {/* Question */}
-      <Text style={styles.question}>What type of posters do you want to create?</Text>
+      {/* Content Area */}
+      <View style={styles.contentArea}>
+        {/* Question */}
+        <Text style={styles.question}>What type of posters do you want to create?</Text>
 
-      {/* Poster Types */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.posterTypes}>
-        {posterTypes.map((type, idx) => (
-          <TouchableOpacity
-            key={type.label}
-            style={[
-              styles.posterTypeCard,
-              selectedType === idx && styles.posterTypeCardActive,
-              { backgroundColor: type.color },
-            ]}
-            onPress={() => setSelectedType(idx)}>
-            <Text style={styles.posterTypeTitle}>{type.title}</Text>
-            <Text style={styles.posterTypeLabel}>{type.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+        {/* Poster Types */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.posterTypes}
+          contentContainerStyle={styles.posterTypesContent}>
+          {posterTypes.map((type, idx) => (
+            <TouchableOpacity
+              key={type.label}
+              style={[
+                styles.posterTypeCard,
+                selectedType === idx && styles.posterTypeCardActive,
+                { backgroundColor: type.color },
+              ]}
+              onPress={() => setSelectedType(idx)}>
+              <Text style={styles.posterTypeTitle}>{type.title}</Text>
+              <Text style={styles.posterTypeLabel}>{type.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-      {/* Description Input */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="stunning promotional image of a deliciously decorated cake, emphasizing its layers, frosting, and toppings in an enticing setting."
-          value={description}
-          onChangeText={setDescription}
-          multiline
-        />
+        {/* Description Input */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="stunning promotional image of a deliciously decorated cake, emphasizing its layers, frosting, and toppings in an enticing setting."
+            placeholderTextColor={'#aaa'}
+            value={description}
+            onChangeText={setDescription}
+            multiline
+          />
+        </View>
+
+        {/* Settings */}
+        <View style={{ gap: 7 }}>
+          <Text
+            style={{
+              color: '#aaa',
+              fontSize: 14,
+            }}>
+            Settings
+          </Text>
+
+          <View style={styles.settings}>
+            <View style={styles.settingRow}>
+              <Text style={styles.settingLabel}>Size</Text>
+              <TouchableOpacity style={styles.settingValue}>
+                <Text style={styles.settingValueText}>{size}</Text>
+                <MaterialIcons name="keyboard-arrow-right" size={20} color="#aaa" />
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                borderBottomColor: '#aaa',
+                borderBottomWidth: 0.4,
+                marginBottom: 8,
+                borderRadius: '100%',
+              }}
+            />
+
+            <View style={styles.settingRow}>
+              <Text style={styles.settingLabel}>Category</Text>
+              <TouchableOpacity style={styles.settingValue}>
+                <Text style={styles.settingValueText}>{category}</Text>
+                <MaterialIcons name="keyboard-arrow-right" size={20} color="#aaa" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </View>
 
-      {/* Settings */}
-      <View style={styles.settings}>
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Size</Text>
-          <TouchableOpacity style={styles.settingValue}>
-            <Text>{size}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Category</Text>
-          <TouchableOpacity style={styles.settingValue}>
-            <Text>{category}</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Generate Button - Fixed at bottom */}
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity style={styles.generateBtn}>
+          <Text style={styles.generateText}>Generate</Text>
+        </TouchableOpacity>
       </View>
-
-      {/* Generate Button */}
-      <TouchableOpacity style={styles.generateBtn}>
-        <Text style={styles.generateText}>Generate</Text>
-      </TouchableOpacity>
-
-      {/* Footer */}
-      {/* <View style={styles.footer}>
-        <Text style={styles.footerText}>CapCut</Text>
-        <Text style={styles.footerText}>curated by Mobbin</Text>
-      </View> */}
     </SafeAreaView>
   );
 }
-
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111',
-    paddingTop: 40,
     paddingHorizontal: 16,
+  },
+  contentArea: {
+    flex: 1,
+  },
+  bottomContainer: {
+    paddingTop: 16,
+    paddingBottom: 24,
   },
   header: {
     flexDirection: 'row',
@@ -169,10 +192,14 @@ const styles = StyleSheet.create({
   posterTypes: {
     flexDirection: 'row',
     marginBottom: 16,
+    flexGrow: 0,
+  },
+  posterTypesContent: {
+    alignItems: 'center',
   },
   posterTypeCard: {
-    width: 120,
-    height: 160,
+    width: 100,
+    height: 120,
     borderRadius: 16,
     marginRight: 12,
     padding: 12,
@@ -198,9 +225,11 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: '#222',
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 12,
-    marginBottom: 16,
+    marginBottom: 26,
+    marginTop: 8,
+    height: 160,
   },
   textInput: {
     color: '#fff',
@@ -209,7 +238,7 @@ const styles = StyleSheet.create({
   },
   settings: {
     backgroundColor: '#222',
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
@@ -220,21 +249,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   settingLabel: {
-    color: '#aaa',
+    color: '#fff',
     fontSize: 16,
   },
   settingValue: {
-    backgroundColor: '#333',
     borderRadius: 8,
     paddingVertical: 4,
     paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  settingValueText: {
+    color: '#aaa',
   },
   generateBtn: {
     backgroundColor: '#fff',
-    borderRadius: 24,
+    borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
-    marginBottom: 24,
   },
   generateText: {
     color: '#222',

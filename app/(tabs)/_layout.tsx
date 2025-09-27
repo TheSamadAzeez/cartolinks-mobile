@@ -1,7 +1,4 @@
-import { Link, Stack, Tabs } from 'expo-router';
-
-import { HeaderButton } from '../../components/HeaderButton';
-import { TabBarIcon } from '../../components/TabBarIcon';
+import { Stack } from 'expo-router';
 
 export default function TabLayout() {
   return (
@@ -11,11 +8,11 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           // tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <HeaderButton />
-            </Link>
-          ),
+          // headerRight: () => (
+          //   <Link href="/modal" asChild>
+          //     <HeaderButton />
+          //   </Link>
+          // ),
         }}
       />
     </Stack>

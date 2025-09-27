@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111',
     paddingHorizontal: 16,
-    gap: 16,
   },
   contentArea: {
     flex: 1,
